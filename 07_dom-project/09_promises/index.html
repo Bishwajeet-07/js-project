@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/1ac96ed0cd.js" crossorigin="anonymous"></script>
+
+
+
+</head>
+
+<body class="bg-slate-900 text-white m-8 md:m-20 relative h-full">
+    <nav class="flex items-center justify-center h-16">
+        <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-3 hover:translate-y-1" href="../index.html" aria-current="page"><i class="fa-solid fa-house"></i></a>
+        <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-3 hover:translate-y-1" href="https://www.linkedin.com/in/bishwajeet-kumar-040a78247/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+        <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-3 hover:translate-y-1" href="https://www.instagram.com/___dharma0718___/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-3 hover:translate-y-1" href="https://www.facebook.com/bishwajeet.kumar.75033/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+        <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-3 hover:translate-y-1" href="https://github.com/Bishwajeet-07" target="_blank"><i class="fa-brands fa-github"></i></a>
+    </nav>
+
+    <div class="name flex flex-col items-center justify-center p-6 my-8 text-4xl">
+        <h2 class="py-2 border-b-2 border-green-600">MINI PRO "Chai or Code"</h2>
+        <p class="text-lg">-> Hitesh sir</p>
+    </div>
+
+    <div class="input flex items-center justify-center w-full">
+        <input
+            class="outline-none border-y-2 border-l-2 border-green-500 w-full md:w-3/5 text-md md:text-xl user_input bg-gray-900 rounded-l-md p-3"
+            type="text" placeholder="enter github username">
+        <button
+            class="w-36 border-y-2 border-r-2  border-yellow-400 btn outline-none text-md md:text-xl p-3 rounded-r-md bg-yellow-500 text-black font-mono font-bold hover:bg-yellow-600">show</button>
+    </div>
+
+
+    <div class="page flex flex-col md:flex-row  justify-center items-center m-7">
+        <div class="flex flex-col items-center justify-center mx-8">
+            <h2 class="title text-4xl m-6 p-3 flex justify-center items-cente bg-indigo-950 rounded-md font-mono">
+                Profile</h2>
+            <img class="image  h-32 w-32 rounded-full inline-block">
+        </div>
+        <div class="flex flex-col items-center justify-center mx-8">
+            <h2 class="title text-4xl m-6 p-3 flex justify-center items-center bg-indigo-950 rounded-md font-mono">
+                Follower</h2>
+            <h2 class="follower text-9xl">0</h2>
+
+        </div>
+        <div class="flex flex-col items-center justify-center mx-8">
+            <h2 class="title text-4xl m-6 p-3 flex justify-center items-center bg-indigo-950 rounded-md font-mono">
+                Repository</h2>
+            <h2 class="repo  text-9xl">0</h2>
+
+        </div>
+
+    </div>
+
+    <div class="error">
+        <h2 class="error_msg flex justify-center items-center text-3xl text-red-400 my-4"></h2>
+    </div>
+
+    <footer class="absolute inset-x-0 -bottom-48 h-16">
+        <div class="flex flex-col md:flex-row justify-center items-center mx-10 rounded-xl overflow-hidden">
+            <div class="flex justify-center items-center">
+                <img class="w-36 h-36 rounded-full "
+                    src="https://scontent.fbho1-2.fna.fbcdn.net/v/t39.30808-6/373310583_1661570350977912_6648319583379971708_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=49d041&_nc_ohc=1GUvAvTsjCoAX_Petrl&_nc_ht=scontent.fbho1-2.fna&oh=00_AfB4WG5rfqZE3RmtZZt3aCvUl4G3UPKIJlCYv7CVOUrQZA&oe=651F5215"
+                    alt="">
+            </div>
+            <div class="flex flex-col items-center justify-center p-6 mx-3 w h-full">
+                <h2 class="text-3xl font-mono ">Developer</h2>
+                <p class="text-x ">Bishwajeet Kumar</p>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <script>
+        const pages = document.querySelector('.page')
+        const follower = document.querySelector('.follower')
+        const reposetry = document.querySelector('.repo')
+        const img = document.querySelector('.image')
+        const btn = document.querySelector('.btn')
+        const input = document.querySelector('.user_input')
+        const error = document.querySelector('.error_msg')
+        let user;
+
+        let user_img = null;
+        let user_follower;
+        let user_repo;
+        let data;
+        let msg;
+
+        let url;
+
+        btn.addEventListener('click', (e) => {
+            pages.style.display = 'flex'
+            error.innerHTML = '';
+
+            user = (input.value)
+            url = `https://api.github.com/users/${user}`
+
+            // console.log(user)
+            request();
+        })
+
+        function request() {
+            data = fetch(url);
+            data.then((data) => {
+                return data.json();
+            })
+                .then((data) => {
+                    console.log(data)
+
+                    if (!data.message) {
+                        user_img = data.avatar_url
+                        user_follower = data.followers
+                        user_repo = data.public_repos
+                        load();
+                        load_follower();
+                        load_repo();
+                    }
+                    else {
+                        msg = data.message;
+                        reject();
+                    }
+                })
+
+                .catch((err) => {
+                    if (user === '') {
+                        pages.style.display = 'none'
+                        error.innerHTML = 'please Enter username'
+                    }
+                    else {
+                        pages.style.display = 'none'
+                        error.innerHTML = `user ${msg} `
+                    }
+                    // console.log(data.message)
+                    // console.log(msg)
+                    // 
+
+                })
+        }
+
+        function load() {
+            img.setAttribute('src', user_img)
+        }
+        function load_follower() {
+            follower.textContent = user_follower;
+        }
+        function load_repo() {
+            reposetry.textContent = user_repo;
+        }
+
+
+    </script>
+</body>
+
+</html>

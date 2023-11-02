@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Number Guessing Game</title>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="../dist/style.css">
+  <script src="https://kit.fontawesome.com/1ac96ed0cd.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-900 text-white">
+  <nav class="flex items-center justify-center h-16">
+    <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1" href="../index.html"
+      aria-current="page"><i class="fa-solid fa-house"></i></a>
+    <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+      href="https://www.linkedin.com/in/bishwajeet-kumar-040a78247/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+    <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+      href="https://www.instagram.com/___dharma0718___/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+    <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+      href="https://www.facebook.com/bishwajeet.kumar.75033/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+    <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+      href="https://github.com/Bishwajeet-07" target="_blank"><i class="fa-brands fa-github"></i></a>
+  </nav>
+
+  <div id="wrapper" class="flex flex-col justify-center items-center mt-2 ">
+    <div class="flex flex-col items-center justify-center p-4 m-2">
+      <h1 class="text-xl font-bold text-yellow-400">Number guessing game</h1>
+      <p class="text-gray-400 ">Try and guess a random number between 1 and 100.</p>
+      <p class="text-gray-400 ">You have 10 attempts to guess the right number.</p>
+
+    </div>
+    </br>
+    <form class="form flex h-40 justify-center items-center relative">
+      <div class="gess p-2 flex flex-col relative ">
+        <input type="text" autofocus id="guessField" placeholder="Guess Value"
+          class="guessField outline-none rounded-xl p-2 text-black">
+        <input type="submit" id="subt" value="Submit guess"
+          class="guessSubmit cursor-pointer flex flex-wrap justify-center items-center m-8 bg-green-500 p-2 text-black font-bold text-base md:text-lg hover:bg-green-400 w-40 r"><br>
+
+      </div>
+    </form>
+    <button
+      class="tryBtn absolute hidden font-bold p-3 bg-amber-500 text-black text-2xl hover:shadow-md hover:shadow-amber-400">Play
+      Again</button>
+
+    <div class="resultParas flex flex-col  items-center ">
+      <p class="lowOrHi text-2xl text-yellow-400 font-bold "></p>
+      <div class="mt-8">
+        <p>Previous Guesses: <span class="guesses text-cyan-400 inline-block p-3"></span></p>
+        <p>Guesses Remaining: <span class="lastResult p-1 px-3 bg-black rounded-xl text-green-600 font-bold">10</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="flex flex-col justify-center items-center mt-8 bg-black p-4 bottom-0  absolute w-full">
+    <h2>HINT:-</h2>
+    <p class="text-xs">Do Inspect go to Console Then</p>
+    <p>...Game Crack...</p>
+    <h3 class="text-sky-500"><span class="text-yellow-400">Developer :- </span>Bishwajeet</h3>
+  </div>
+
+  <script>
+    const nuguessFieldm = document.querySelector("#guessField")
+    const subt = document.querySelector("#subt")
+    const lowOrHi = document.querySelector(".lowOrHi")
+    const guesses = document.querySelector(".guesses")
+    const lastResult = document.querySelector(".lastResult")
+    const gess = document.querySelector(".gess")
+    const tryBtn = document.querySelector(".tryBtn")
+    let magic;
+    let val;
+
+    function random() {
+      magic = Math.floor(Math.random() * 100 + 1)
+      console.log(magic)
+    }
+    random();
+
+
+
+    subt.addEventListener("click", (e) => {
+      e.preventDefault();
+      // nuguessFieldm.attributes["autofocus"]='';
+
+      val = parseInt(nuguessFieldm.value)
+
+      if (val === '' || val < 0 || isNaN(val)) {
+        // console.log("enter number")
+        // console.log(val)
+        lowOrHi.innerHTML = "Enter Valid Number"
+        lowOrHi.style.backgroundColor = "red"
+        lowOrHi.style.color = "white"
+      }
+      else {
+        lowOrHi.style.backgroundColor = ""
+        lowOrHi.style.color = ""
+        // checkval();
+        count();
+      }
+
+    })
+
+    let i = 10
+    function count() {
+      guesses.innerHTML += ` ${val} `
+      if (i > 0) {
+        i--;
+        if (i > 3) {
+          lastResult.style.color = 'green'
+        }
+        else {
+          lastResult.style.color = 'red'
+        }
+        // console.log(i)
+        checkval();
+        lastResult.textContent = `${i}`;
+      }
+      else {
+        lose();
+      }
+    }
+
+    tryBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      replay();
+      lowOrHi.innerHTML = ''
+      i = 10;
+      lastResult.textContent = `${i}`
+      guesses.innerHTML = ''
+
+
+    })
+
+    function checkval() {
+      if (val === magic) {
+        // console.log("geest right")
+        win();
+      }
+      else {
+
+        if (val < magic) {
+          // console.log("high");
+          nuguessFieldm.value = ''
+          lowOrHi.innerHTML = `' ${val} ' Too High`
+        }
+        else {
+          // console.log("low");
+          nuguessFieldm.value = ''
+          lowOrHi.innerHTML = `' ${val} ' Too Low`
+        }
+      }
+    }
+
+    function lose() {
+      gess.style.display = "none"
+      tryBtn.style.display = "block"
+      tryBtn.textContent = "Try Again"
+      lowOrHi.innerHTML = 'Limit End'
+      lowOrHi.style.backgroundColor = "red"
+      lowOrHi.style.color = "white"
+      lowOrHi.style.marginTop = "4rem"
+    }
+
+    function win() {
+      gess.style.display = "none"
+      tryBtn.style.display = "block"
+      lowOrHi.innerHTML = 'Ooo... You killed it (Winner)'
+      lowOrHi.style.backgroundColor = "green"
+      lowOrHi.style.color = "white"
+      lowOrHi.style.marginTop = "4rem"
+
+    }
+
+
+    function replay() {
+      random();
+      nuguessFieldm.value = ''
+      gess.style.display = "block"
+      tryBtn.style.display = "none"
+
+
+    }
+
+    // random();
+
+  </script>
+
+</body>
+
+</html>

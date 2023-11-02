@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Event KeyCodes</title>
+  <!-- <link rel="stylesheet" type="text/css" href="../styles.css" /> -->
+  <link rel="stylesheet" href="../dist/style.css">
+  <style>
+    table,
+    th,
+    td {
+      border: 1px solid #e7e7e7;
+    }
+
+    .project {
+      background-color: #1c1c1c;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100vh;
+    }
+
+    .color {
+      color: aliceblue;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .color td {
+      font-size: 1.3rem;
+      padding: 1rem;
+      background-color: green;
+      color: white;
+    }
+  </style>
+  <script src="https://kit.fontawesome.com/1ac96ed0cd.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-green-900">
+  <nav class="flex items-center justify-center h-16">
+    <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1" href="../index.html"
+      aria-current="page"><i class="fa-solid fa-house"></i></a>
+    <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+      href="https://www.linkedin.com/in/bishwajeet-kumar-040a78247/" target="_blank"><i
+        class="fa-brands fa-linkedin"></i></a>
+    <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+      href="https://www.instagram.com/___dharma0718___/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+    <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+      href="https://www.facebook.com/bishwajeet.kumar.75033/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+    <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+      href="https://github.com/Bishwajeet-07" target="_blank"><i class="fa-brands fa-github"></i></a>
+  </nav>
+  <div class="project">
+    <div id="insert">
+      <div class="key">Press the key and watch magic</div>
+    </div>
+  </div>
+
+  <script>
+
+    const insert = document.getElementById('insert');
+
+    window.addEventListener('keydown', (e) => {
+      insert.innerHTML = `
+      <div class="color">
+          <table>
+            <tr>
+              <th>key</th>
+              <th>keycode</th>
+              <th>code</th>
+            </tr>
+            <tr>
+              <td>${e.key === ' ' ? 'Space' : e.key}</td>
+              <td>${e.keyCode}</td>
+              <td>${e.code}</td>
+            </tr> 
+            </table>
+          </div> `;
+    })
+
+
+
+  </script>
+
+  <script src="./chaiaurcode.js"></script>
+</body>
+
+</html>

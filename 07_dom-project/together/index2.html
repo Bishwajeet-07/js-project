@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>love presentage</title>
+    <style>
+        body{
+            background-color: rgb(0, 0, 0);
+            display: flex;
+            justify-content: center;
+        }
+        .full{
+            min-width: 325px;
+            color: white;
+            background-color: rgb(158, 0, 121);
+            border-radius: 10px;
+            box-shadow: 0 0 10px 5px purple;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            /* justify-content: center; */
+            align-items: center;
+            margin-top: 2rem;
+        }
+        .head{
+            display: flex;
+            flex-direction: column;
+        }
+        input{
+            outline: none;
+            border: 3px solid rgb(255, 19, 255);
+            border-radius: 6px;
+            font-size: 1.3rem;
+            padding: 0.7rem;
+            margin: 0.6rem;
+            color: purple;
+        }
+        .click{
+            outline: none;
+            background-color: rgba(193, 0, 193, 0.337);
+            border: 2px solid rgb(97, 16, 97);
+            color: white;
+            cursor: pointer;
+            font-size: 1.3rem;
+            padding: 1rem 1.6rem;
+            margin-bottom: 1rem;
+        }
+        .click:hover{
+            cursor: pointer;
+            background-color: purple;
+        }
+        .value{
+            font-size: 4rem;
+            padding: 2rem;
+            color: white;
+            border: 1px solid white;
+            border-radius: 50%;
+            /* margin-top: rem; */
+        }
+        .title{
+            border-radius: 8px;
+            color: yellow;
+            padding: 1rem;
+            background-color: rgba(51, 0, 27, 0.46);
+        }
+        .user{
+            margin-top: 2rem;
+            overflow: hidden;
+            max-width: 350px;
+            text-wrap: wrap;
+            font-family:monospace;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            font-weight: 400;
+            padding: 9px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <section class="full">
+        <div class="name">
+            <h1 class="title">07❤️18 </h1>
+        </div>
+        <div class="head">
+            <input class="male" type="text" placeholder="Male's Name">
+            <input class="female" type="text" placeholder="Female's Name">
+        </div>
+        <div class="user_name">
+            <h1 class="user">Love Calculator</h1>
+        </div>
+        <div class="score">
+            <h2 class="value">0</h2>
+        </div>
+        <div>
+            <button class="click">
+                See
+            </button>
+        </div>
+    </section>
+
+    <script>
+        let male = document.querySelector(".male")
+        let female = document.querySelector(".female")
+        let values = document.querySelector('.value')
+        let btn = document.querySelector(".click")
+        let both = document.querySelector(".user")
+        let male_name;
+        let female_name;
+
+
+
+        function value() {
+            male_name = male.value
+            female_name = female.value 
+            both.textContent = `${male_name} 💞 ${female_name}`
+
+        }
+
+        function random() {
+            const random = Math.floor((Math.random() * (99 - 70 + 1) + 70));
+            values.style.backgroundColor='black'
+            values.textContent = `${random} %`;
+        }
+
+        function run() {
+            value();
+            if (male_name === '' || female_name === '' || male_name === undefined || female_name === NaN) {
+                // btn.setAttribute('disabled', false)
+                both.textContent = 'Enter the name'
+                both.style.backgroundColor = 'rgba(133, 0, 71, 0.46)';
+            }
+            else {
+
+                value();
+
+                const interval = setInterval(() => {
+                    random();
+                }, 80);
+
+                setTimeout(() => {
+                    stopinterval();
+                }, 900);
+
+                function stopinterval() {
+                    clearInterval(interval)
+                }
+            }
+        }
+
+        function clear(){
+            male.value = "";
+            female.value = "";
+            console.log(male_name)
+            console.log(female_name);
+        }
+        btn.addEventListener('click', (e) => {
+            
+            run();
+            clear()
+            
+        })
+    </script>
+</body>
+
+</html>

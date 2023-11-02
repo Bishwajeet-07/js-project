@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo app by bishwajeet</title>
+    <link rel="stylesheet" href="../dist/style.css">
+    <script src="https://kit.fontawesome.com/1ac96ed0cd.js" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="../to-do-app/todo.html"> -->
+</head>
+
+<body class="bg-slate-800 ">
+    <nav class="flex items-center justify-center h-16 bg-zinc-800">
+        <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+            href="/07_dom-project/index.html" aria-current="page"><i class="fa-solid fa-house"></i></a>
+        <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+            href="https://www.linkedin.com/in/bishwajeet-kumar-040a78247/" target="_blank"><i
+                class="fa-brands fa-linkedin"></i></a>
+        <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+            href="https://www.instagram.com/___dharma0718___/" target="_blank"><i
+                class="fa-brands fa-instagram"></i></a>
+        <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+            href="https://www.facebook.com/bishwajeet.kumar.75033/" target="_blank"><i
+                class="fa-brands fa-facebook"></i></a>
+        <a class="text-blue-300 font-medium border-b-2 border-yellow-400 m-2 hover:translate-y-1"
+            href="https://github.com/Bishwajeet-07" target="_blank"><i class="fa-brands fa-github"></i></a>
+    </nav>
+
+    <div class="flex justify-center items-center mt-8 text-2xl">
+        <h1 class="flex justify-center items-center text-green-500 bg-gray-900 w-full p-2">Create Today's Plan</h1>
+    </div>
+
+    <div class="flex justify-center items-center mt-2 w-full">
+        <div class=" w-96 md:w-1/2 p-4">
+            <div class="flex justify-between items-center">
+                <input autofocus type="text" class="text w-full p-2 outline-none">
+                <input type="submit" class="btn bg-slate-400 p-2 ml-1 text-black cursor-pointer ">
+            </div>
+            <div>
+                <h2 class="text-yellow-200 opacity-30">Bishwajeet Todo</h2>
+            </div>
+            <p class="namelist text-white bg-red-600  hidden justify-center items-center w-full">error</p>
+            <div class="append flex flex-col items-start justify-center">
+                <!-- <div class="todolist flex w-full justify-between">
+                    <p class="text-white flex justify-center items-center py-2">create your to-do</p>
+                    <button class="remove bg-red-600 p-2 text-white rounded-sm">remove</button>
+                </div> -->
+            </div>
+            <!-- <div class=" all hidden justify-center items-center ">
+                <button class="doneall btn2 p-2 m-2 bg-green-600 text-xl text-white rounded-md">Done all</button>
+                <button class="removeall btn2 p-2 m-2 bg-red-600 text-xl text-white rounded-md">remove all</button>
+            </div> -->
+        </div>
+    </div>
+
+    <script>
+        const text = document.querySelector(".text")
+        const btn = document.querySelector(".btn")
+        const append = document.querySelector(".append")
+        const remove_item = document.querySelectorAll(".remove")
+        const todolist = document.querySelectorAll(".todolist")
+        const namelist = document.querySelector(".namelist")
+        const done_items = document.querySelector(".done")
+        // const alldoneremove = document.querySelector(".all")
+        // const doneall = document.querySelector(".doneall")
+        // const removeall = document.querySelector(".removeall")
+        // const btn2 = document.querySelector(".btn2")
+        // const msg = document.querySelectorAll(".msg")
+        let val;
+        let add;
+
+        // submition *********
+        text.addEventListener('keypress', (e) => {
+            if (e.code === 'Enter') {
+                // console.log(e.code)
+                gettodotext();
+            }
+        })
+        // submition *********
+        btn.addEventListener('click', (e) => {
+            gettodotext();
+        })
+
+        // showing todo text ***********
+        function gettodotext() {
+            val = (text.value)
+            // console.log(val)
+            // console.log(todolist)
+
+            if (val === '') {
+                namelist.innerHTML = "Write Something"
+                // console.log(namelist)
+                namelist.style.display = 'flex'
+            }
+            else {
+                namelist.textContent = ""
+                addtodo();
+                text.value = ''
+            }
+        }
+
+        // removing todo **********
+        append.addEventListener('click', (e) => {
+            // console.log(e.target.classList)
+            if (e.target.classList.contains("remove")) {
+                const removeline = e.target.parentNode.parentNode;
+                removeline.remove();
+                // console.log(removeline)
+            }
+        })
+
+        // done todo ************
+        append.addEventListener("click", (e) => {
+            if (e.target.classList.contains("done")) {
+                const doneline = e.target.parentNode.previousSibling;
+                doneline.style.textDecoration = "line-through";
+                doneline.style.color = "#90EE90";
+            }
+        })
+
+        // create todo and append *************
+        function addtodo() {
+            const list_node = document.createElement("div");
+            list_node.classList.add("todolist", "flex", "w-full", "justify-between", "my-2")
+            const newtext = `<p class="msg text-white flex justify-center items-center py-2">${val}</p><div>
+                    <button class="done bg-green-600 p-2 text-white rounded-sm">Done</button>
+                    <button class="remove bg-red-600 p-2 text-white rounded-sm">Remove</button> </div>`
+            list_node.innerHTML = newtext
+            append.prepend(list_node)
+            // console.log(append)
+            // allselect();
+        }
+
+        // show remove all and done all
+        // function allselect() {
+        //     // console.log("call")
+        //     alldoneremove.style.display = 'flex'
+        // }
+
+    </script>
+</body>
+
+</html>
